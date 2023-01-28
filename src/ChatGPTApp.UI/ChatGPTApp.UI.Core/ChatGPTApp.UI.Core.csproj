@@ -35,8 +35,4 @@
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\ChatGPTApp.Shared\ChatGPTApp.Shared.csproj" />
-  </ItemGroup>
-
 </Project>

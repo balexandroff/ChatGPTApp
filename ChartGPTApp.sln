@@ -10,8 +10,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatGPTApp.UI.Web", "src\Ch
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatGPTApp.UI.Mobile", "src\ChatGPTApp.UI\ChatGPTApp.UI.Mobile\ChatGPTApp.UI.Mobile.csproj", "{A4D3F6E7-A33B-4F6E-8878-A403E7632D76}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatGPTApp.Shared", "src\ChatGPTApp.Shared\ChatGPTApp.Shared.csproj", "{5062E69C-8651-4582-81BD-D26E3BCE2430}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,10 +30,6 @@ Global
 		{A4D3F6E7-A33B-4F6E-8878-A403E7632D76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4D3F6E7-A33B-4F6E-8878-A403E7632D76}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A4D3F6E7-A33B-4F6E-8878-A403E7632D76}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{5062E69C-8651-4582-81BD-D26E3BCE2430}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5062E69C-8651-4582-81BD-D26E3BCE2430}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5062E69C-8651-4582-81BD-D26E3BCE2430}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5062E69C-8651-4582-81BD-D26E3BCE2430}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
