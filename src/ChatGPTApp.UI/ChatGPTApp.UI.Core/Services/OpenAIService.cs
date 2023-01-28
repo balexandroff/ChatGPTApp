@@ -12,7 +12,7 @@ namespace ChatGPTApp.UI.Core.Services
 
         public async IAsyncEnumerable<CompletionResult> CompleteText(string request)//byte type
         {
-            OpenAIAPI api = new OpenAIAPI("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");
+            OpenAIAPI api = new OpenAIAPI("YOUR-API-HERE");
 
             await foreach (var token in api.Completions.StreamCompletionEnumerableAsync(new CompletionRequest(request, Model.DavinciText, 200, 0.5, presencePenalty: 0.1, frequencyPenalty: 0.1)))
             {
