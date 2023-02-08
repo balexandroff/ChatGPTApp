@@ -1,5 +1,4 @@
-﻿using ChatGPTApp.Shared;
-using OpenAI_API;
+﻿using OpenAI_API;
 
 namespace ChatGPTApp.UI.Core.Interfaces
 {

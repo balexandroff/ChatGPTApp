@@ -21,6 +21,13 @@
     </div>
 
     <script src="_framework/blazor.webassembly.js"></script>
+    <script>
+        // When the user clicks the button, the page scrolls to the top
+        function ScrollToBottom() {
+            document.getElementsByTagName("textarea")[0].focus();
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+    </script>
 </body>
 
 </html>

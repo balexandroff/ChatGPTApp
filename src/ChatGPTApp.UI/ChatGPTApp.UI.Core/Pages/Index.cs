@@ -37,7 +37,7 @@ public partial class Index
         //finally { if (_results != null) await _results.DisposeAsync(); }
     }
 
-    protected async Task Process(string request)
+    protected async Task Process(string request, Action completeAction)
     {
         if (!string.IsNullOrEmpty(request))
         {
@@ -49,6 +49,16 @@ public partial class Index
                // _conversation.Add((DateTime.Now, "Me", new List<object>() { request }));
 
                 List<object> result = new List<object>();
+
+                _conversation.AddRange(new List<(DateTime time, string author, List<object> item)>
+                {
+                    (DateTime.Now, "Me", new List<object>() { request })
+                });
+
+                StateHasChanged();
+
+                completeAction();
+
                 await foreach (var item in _service.CompleteText(request))
                 {
                     result.Add(item);
@@ -56,13 +66,16 @@ public partial class Index
 
                 _conversation.AddRange(new List<(DateTime time, string author, List<object> item)>
                 {
-                    (DateTime.Now, "Me", new List<object>() { request }),
                     (DateTime.Now, "Bot", result)
                 });
 
                 _search = string.Empty;
                 _isLoading = false;
                 _error = string.Empty;
+
+                StateHasChanged();
+
+                completeAction();
             });
 
             if (await Task.WhenAny(task, Task.Delay(timeout)) == task)
@@ -70,6 +83,7 @@ public partial class Index
                 //_search = string.Empty;
                 //_isLoading = false;
                 //_error = string.Empty;
+                StateHasChanged();
             }
             else
             {
@@ -92,11 +106,11 @@ public partial class Index
     {
         _search = args.Value.ToString();
     }
-    public async void OnEnter(KeyboardEventArgs e)
+    public async void OnEnter(KeyboardEventArgs e, Action completeAction)
     {
         if (e.Code == "Enter" || e.Code == "NumpadEnter")
         {
-            await this.Process(_search);
+            await this.Process(_search, completeAction);
         }
     }
 

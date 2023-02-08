@@ -1,73 +1,8 @@
 ﻿@page "/index"
 @page "/"
+@inject IJSRuntime JsRuntime
 
 <PageTitle>ChatGPT App</PageTitle>
-@*@code{
-    namespace System.Collections.Generic
-    {
-        public interface IAsyncEnumerable<out T>
-        {
-    IAsyncEnumerator<T> GetAsyncEnumerator(
-      CancellationToken cancellationToken = default);
-        }
-        public interface IAsyncEnumerator<out T> : IAsyncDisposable
-        {
-    ValueTask<bool> MoveNextAsync();
-    T Current { get; }
-        }
-    }
-    namespace System
-    {
-        public interface IAsyncDisposable
-        {
-    ValueTask DisposeAsync();
-        }
-    }
-}*@
-@*<h1>Alcoholic Cocktails</h1>
-*@
-@*@if (_drinks == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <div class="table">
-        @foreach (var drink in _drinks.Where(drink => drink.Type == 1))
-        {
-          <div class="container">
-            <div class="row">
-
-              <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 col-9">
-                <div>
-                      @drink.Name
-                </div>
-                <div>
-                      @(string.Join(", ", drink.Ingradients.Select(i => $"{i.Key}({i.Value}ml)")))
-                </div>
-                @if (drink.Garnishes.Count > 0)
-                {
-                <div>
-                      Garnish/Add:
-                        @(string.Join(", ", drink.Garnishes))
-                </div>
-                }
-              </div>
-              <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 col-3">
-                <button type="button" class="btn @(drink.IsDisabled ? "disabled" : (drink.IsProcessing ? "btn-warning" : "btn-primary"))"
-                @onclick="@(async () => await Process(drink))">
-                            @(drink.IsProcessing ? "Processing" : "Make")
-                </button>
-              </div>
-            </div>
-
-          </div>
-        }
-    </div>
-
-
-}*@
-
 
 <div class="container">
     <header class="blog-header py-3">
@@ -110,7 +45,7 @@ else
         <div class="col">
             <form>
                 <div class="form-group">
-                    <textarea class="form-control" @bind="_search" @oninput="HandleOnChange" @onkeyup="OnEnter" rows="3" placeholder="Ask me anything..." disabled="@_isLoading"></textarea>
+                    <textarea class="form-control" @bind="_search" @oninput="HandleOnChange" @onkeyup="@(args => OnEnter(args, onProcessEnded))" rows="3" placeholder="Ask me anything..." disabled="@_isLoading"></textarea>
                     @if(!string.IsNullOrEmpty(_error))
                     {
                         <div class="invalid-feedback">
@@ -118,7 +53,7 @@ else
                         </div>
                     }
                     <div class="d-grid gap-2">
-                        <button type="button" @onclick="@(async () => await Process(_search))" class="btn btn-primary" disabled="@_isLoading">Send question</button>
+                        <button type="button" @onclick="@(async () => await Process(_search, onProcessEnded))" class="btn btn-primary" disabled="@_isLoading">Send question</button>
                         <button type="button" @onclick="@(async () => await ClearConversation())" class="btn btn-secondary" disabled="@_isLoading">Clear conversation</button>
                     </div>
                 </div>
@@ -134,4 +69,12 @@ else
         <div class="inner two"></div>
         <div class="inner three"></div>
     </div>
+}
+
+@code {
+
+    private async void onProcessEnded()
+    {
+        await JsRuntime.InvokeVoidAsync("ScrollToBottom");
+    }
 }
